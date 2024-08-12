@@ -1,0 +1,33 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name poshgang.org;
+
+    # Redirect all HTTP traffic to HTTPS
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name poshgang.org;
+
+    root /var/www/poshgang/public_html;
+    index index.html;
+
+    ssl_certificate /etc/letsencrypt/live/poshgang.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/poshgang.org/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/poshgang.org/chain.pem;
+
+    # Security enhancements (optional but recommended)
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    ssl_dhparam /etc/ssl/certs/dhparam.pem;
+
+    location / {
+        try_files $uri $uri/ $uri.html =404;
+    }
+}

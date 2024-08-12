@@ -1,5 +1,5 @@
 #!/bin/sh
 
-proj="cutemafia"
+proj="poshgang"
 [ ! -d /etc/nginx/sites-enabled ] && mkdir /etc/nginx/sites-enabled
-sudo ln -s /etc/nginx/sites-available/"${proj}.conf" /etc/nginx/sites-enabled/"${proj}.conf"
+sudo ln -sf /etc/nginx/sites-available/"${proj}.conf" /etc/nginx/sites-enabled/"${proj}.conf"
